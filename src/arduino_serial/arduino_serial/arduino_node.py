@@ -6,18 +6,18 @@ from example_interfaces.msg import String
 from configparser import ConfigParser
 
 # Read settings from .ini file. Maybe not a normal way of doing this in ROS
-configur = ConfigParser() 
-configur.read('config.ini')
-BAUDRATE =  configur.getint('serialcom','baudrate')
-TIMEOUT =  configur.getint('serialcom','timeout')
-COM_PORT =  configur.getint('serialcom','port')
+# configur = ConfigParser() 
+# configur.read('config.ini')
+BAUDRATE =  115200#configur.getint('serialcom','baudrate')
+TIMEOUT =  5#configur.getint('serialcom','timeout')
+COM_PORT =  "/dev/ttyACM0" #configur.getint('serialcom','port')
 
 
 class ArduinoSerialNode(Node):
     """
     Node that wraps some class used for serial communication.
     """
-    def __init__(self, serial_class:ArduinoSerial)
+    def __init__(self, serial_class:ArduinoSerial):
         super().__init__("arduino_serial_node")  # type: ignore
         self.serial_class = serial_class
 
@@ -31,8 +31,8 @@ class ArduinoSerialNode(Node):
 
  
     def send_command(self, message):
-        self.serial_class.write(message)
-        self.get_logger().info("Message sent: " + message)
+        self.serial_class.write(message.data)
+        self.get_logger().info("Message sent: " + message.data)
 
     def read_response(self):
         response = self.serial_class.read()

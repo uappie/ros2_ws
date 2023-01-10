@@ -5,10 +5,10 @@ import serial.tools.list_ports
 from configparser import ConfigParser
 from time import sleep
 
-configur = ConfigParser()
-configur.read('configu.ini')
-BAUDRATE =  configur.getint('serialcom','baudrate')
-TIMEOUT =  configur.getint('serialcom','timeout')
+#configur = ConfigParser()
+#configur.read('config.ini')
+BAUDRATE =  115200 #configur.getint('serialcom','baudrate')
+TIMEOUT =  5 #configur.getint('serialcom','timeout')
 
 class ArduinoSerial:
     def __init__(self, baudrate, timeout) -> None:
@@ -58,10 +58,10 @@ class ArduinoSerial:
         except Exception:
             self.disconnect()
     
-# if __name__ == "__main__": 
-#     serialcom = ArduinoSerial(BAUDRATE, TIMEOUT)
-#     print('COM ports:')
-#     serialcom.list_ports()
-#     userInput = input('Select one of the ports for connecting. Input in "COM4" format: ')
-#     serialcom.connect(userInput)
-#     serialcom.loop()
+if __name__ == "__main__": 
+     serialcom = ArduinoSerial(BAUDRATE, TIMEOUT)
+     print('COM ports:')
+     serialcom.list_ports()
+     userInput = input('Select one of the ports for connecting. Input in "COM4" format: ')
+     serialcom.connect(userInput)
+     serialcom.loop()
